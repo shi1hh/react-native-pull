@@ -131,6 +131,20 @@ export default class extends Component {
         }
     }
 
+    beginRefresh () {
+
+        this.setFlag(flagPulling);
+        Animated.timing(this.state.pullPan, {
+            toValue: {x: this.defaultXY.x, y: 0},
+            easing: Easing.linear,
+            duration: this.duration
+        }).start(() => {
+            this.setFlag(flagPullrelease);
+            this.props.onPullRelease && this.props.onPullRelease(this.resolveHandler);
+           } )
+
+    }
+
     onScroll(e) {
         if (e.nativeEvent.contentOffset.y <= 0) {
             this.setState({scrollEnabled: this.defaultScrollEnabled});
